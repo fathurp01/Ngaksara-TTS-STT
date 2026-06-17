@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export type InputMethod = 'mouse' | 'gesture';
+export type InputMethod = 'mouse' | 'gesture' | 'speech';
 
 interface MethodSelectionPageProps {
   onBack?: () => void;
@@ -44,7 +44,7 @@ const MethodSelectionPage = ({ onBack, onMethodSelect, mode }: MethodSelectionPa
             Pilih Metode Input
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Mouse Method */}
             <button
               onClick={() => handleMethodClick('mouse')}
@@ -112,6 +112,40 @@ const MethodSelectionPage = ({ onBack, onMethodSelect, mode }: MethodSelectionPa
                 </span>
               </div>
             </button>
+
+            {/* Speech Method */}
+            <button
+              onClick={() => handleMethodClick('speech')}
+              className={`group relative flex flex-col items-center justify-center gap-4 p-8 rounded-xl border-2 transition-all duration-300 ${
+                selectedMethod === 'speech'
+                  ? 'border-primary bg-primary/5 shadow-lg'
+                  : 'border-gray-300 hover:border-primary hover:shadow-md'
+              }`}
+            >
+              {selectedMethod === 'speech' && (
+                <div className="absolute top-4 right-4 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-sm">check</span>
+                </div>
+              )}
+              
+              <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mb-2">
+                <span className="material-symbols-outlined text-orange-600 text-4xl">mic</span>
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-900">Speech / Pelafalan</h3>
+              <p className="text-sm text-gray-600 text-center">
+                Lafalkan Aksara Sunda menggunakan suara & mikrofon Anda
+              </p>
+              
+              <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                <span className="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">
+                  🎙️ Real-time
+                </span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">
+                  🗣️ Interaktif
+                </span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -138,6 +172,34 @@ const MethodSelectionPage = ({ onBack, onMethodSelect, mode }: MethodSelectionPa
               <li className="flex items-start gap-2">
                 <span className="material-symbols-outlined text-purple-600 text-lg mt-0.5">circle</span>
                 <span>Gunakan jari telunjuk sebagai pointer untuk menggambar</span>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        {/* Instructions for Speech */}
+        {selectedMethod === 'speech' && (
+          <div className="mb-8 p-6 bg-orange-50 rounded-xl border border-orange-200">
+            <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <span className="material-symbols-outlined text-orange-600">info</span>
+              Cara Menggunakan Speech Recognition
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-orange-600 text-lg mt-0.5">circle</span>
+                <span>Pastikan mikrofon browser Anda diizinkan untuk merekam suara</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-orange-600 text-lg mt-0.5">circle</span>
+                <span><strong>Latihan:</strong> Klik tombol putar (🔊) untuk mendengarkan pengucapan yang benar</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-orange-600 text-lg mt-0.5">circle</span>
+                <span>Klik tombol **Mulai Rekam** dan ucapkan aksara Sunda tersebut dengan jelas</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-orange-600 text-lg mt-0.5">circle</span>
+                <span>Sistem akan otomatis mengonversi suara Anda ke teks dan memberikan skor WER</span>
               </li>
             </ul>
           </div>

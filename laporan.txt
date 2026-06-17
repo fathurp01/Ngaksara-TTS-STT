@@ -1,0 +1,189 @@
+================================================================================
+LAPORAN IMPLEMENTASI SISTEM PEMBELAJARAN AKSARA SUNDA
+INTEGRASI TEKNOLOGI TEXT-TO-SPEECH (TTS) DAN SPEECH-TO-TEXT (STT)
+================================================================================
+
+Laporan ini menyusun dokumentasi teknis mengenai bab implementasi sistem aplikasi 
+pembelajaran aksara Sunda interaktif. Sistem ini diimplementasikan menggunakan 
+dua model utama berbasis Deep Learning dari ekosistem Massively Multilingual 
+Speech (MMS) besutan Meta AI, yaitu model untuk Speech-to-Text (STT) dan 
+Text-to-Speech (TTS).
+
+Dokumentasi ini disusun berdasarkan rancangan metodologi penelitian pada proposal, 
+terfokus pada implementasi teknologi pengolahan sinyal ucapan dan kalkulasi 
+akurasi pelafalan berbasis metrik kuantitatif.
+
+--------------------------------------------------------------------------------
+1. DESAIN ARSITEKTUR DAN LINGKUNGAN PENGEMBANGAN
+--------------------------------------------------------------------------------
+
+Sistem dibangun menggunakan arsitektur modular yang memisahkan area antarmuka 
+pengguna (Frontend) dengan mesin pengolah kecerdasan buatan (Backend):
+
+1.1. Backend Engine (Python Flask)
+     Bertindak sebagai server API utama yang memuat model-model Deep Learning ke 
+     dalam memori, menerima rekaman audio, menjalankan proses inferensi (TTS/STT), 
+     serta mengalkulasi kemiripan teks menggunakan algoritma jarak Levenshtein.
+     
+1.2. Frontend Interface (React & Vite)
+     Menyajikan antarmuka interaktif yang menampilkan aksara Sunda, menyediakan 
+     kontrol pemutaran audio instruktur, menangkap rekaman suara dari mikrofon 
+     pengguna melalui Web Audio API, dan menampilkan hasil skor evaluasi.
+
+1.3. Lingkungan Model Deep Learning (models/)
+     Aplikasi memuat dua model terlatih yang ditempatkan secara lokal pada direktori 
+     projek untuk menjaga efisiensi pemanggilan tanpa bergantung pada koneksi internet:
+     * Model TTS: `models/mms-tts-sun` (Arsitektur VITS)
+     * Model STT: `models/wav2vec2-sundanese` (Arsitektur Wav2Vec2)
+
+--------------------------------------------------------------------------------
+2. IMPLEMENTASI MODUL TEXT-TO-SPEECH (TTS)
+--------------------------------------------------------------------------------
+
+Modul TTS berfungsi sebagai instruktur pelafalan virtual yang mensintesis teks 
+aksara Sunda/transliterasi latin menjadi gelombang suara yang natural.
+
+2.1. Alur Pemrosesan Teks (Text Preprocessing)
+     Teks masukan berupa karakter Aksara Sunda atau transliterasi Latin diolah 
+     terlebih dahulu sebelum masuk ke tokenizer:
+     * Mengubah seluruh huruf menjadi huruf kecil (lowercase).
+     * Normalisasi karakter vokal Sunda (menghapus karakter diakritik seperti é 
+       dan è menjadi e biasa untuk menyesuaikan kamus fonetik model).
+     * Optimalisasi durasi input pendek: Karena arsitektur VITS memiliki durasi 
+       predictor yang rentan menghasilkan audio kosong atau terlalu pendek untuk 
+       teks bersuku kata tunggal (<= 3 karakter), sistem secara otomatis menambahkan 
+       kata pembantu di depan teks masukan (contoh: "ka" disintesis menjadi "aksara ka").
+
+2.2. Sintesis Suara End-to-End dengan Model VITS
+     * Tokenizer: Mengonversi deretan teks bersih menjadi deretan token ID numerik.
+     * Inferensi Model: Token ID tersebut dilewatkan ke model VitsModel. 
+       Model ini melakukan prediksi parameter akustik dan langsung menghasilkan 
+       sintesis gelombang suara (waveform) secara langsung (end-to-end) tanpa voder 
+       terpisah.
+     * Spesifikasi Audio Output:
+       - Frekuensi sampling (Sampling Rate): Sesuai konfigurasi asli model (16.000 Hz atau 22.050 Hz).
+       - Normalisasi Sinyal: Untuk mencegah clipping (suara pecah) dan volume rendah, 
+         amplitudo waveform dinormalisasi menggunakan faktor pengali 0.9 terhadap nilai absolut puncak sinyal.
+       - Format Penyimpanan: Waveform hasil sintesis dikonversi ke representasi 
+         16-bit signed PCM WAV dan dialirkan ke klien menggunakan buffer memori (BytesIO).
+
+--------------------------------------------------------------------------------
+3. IMPLEMENTASI MODUL SPEECH-TO-TEXT (STT)
+--------------------------------------------------------------------------------
+
+Modul STT bertindak sebagai evaluator otomatis yang mendengarkan rekaman suara 
+pengguna dan menerjemahkannya kembali menjadi representasi teks digital.
+
+3.1. Preprocessing dan Normalisasi Audio
+     Sinyal suara yang direkam dari mikrofon klien (dalam format WAV/WebM) dikirim 
+     melalui multipart form data ke endpoint Backend. Di sisi Backend, audio 
+     diproses sebagai berikut:
+     * Pembacaan Sinyal: Membaca bitstream audio menggunakan pustaka PySoundFile.
+     * Konversi Saluran (Mono): Jika audio masukan bertipe stereo (multi-channel), 
+       amplitudonya dirata-rata pada seluruh channel untuk diubah menjadi saluran tunggal (mono).
+     * Resampling Sinyal (16 kHz): Karena model Wav2Vec2 dilatih khusus menggunakan 
+       audio berfrekuensi 16.000 Hz, backend melakukan resampling sinyal secara digital 
+       menggunakan filter resampling Scipy apabila frekuensi sampling audio masukan 
+       berbeda dari 16 kHz.
+
+3.2. Ekstraksi Fitur dan Inferensi CTC dengan Wav2Vec2
+     * Ekstraksi Fitur Akustik: Waveform beresolusi 16 kHz dinormalisasi amplitudonya 
+       dan diubah menjadi vektor representasi tensor melalui `Wav2Vec2Processor`.
+     * Inferensi Akustik: Tensor dilewatkan ke model `Wav2Vec2ForCTC` untuk memprediksi 
+       distribusi probabilitas karakter pada setiap frame audio (logits).
+     * Decoding Karakter: Menggunakan Connectionist Temporal Classification (CTC) 
+       decoding untuk menggabungkan karakter berulang dan menghilangkan token kosong, 
+       sehingga menghasilkan transkripsi teks mentah (*raw transcription*).
+
+3.3. Pembersihan Teks Transkripsi
+     Teks hasil STT dibersihkan menggunakan fungsi normalisasi string:
+     * Menghapus prefiks atau kata pembantu yang ditambahkan saat sintesis 
+       (seperti "aksara", "sara", "ksara", dll.).
+     * Menghilangkan spasi ekstra di awal dan akhir string (*strip*).
+
+--------------------------------------------------------------------------------
+4. EVALUASI DAN PENILAIAN AKURASI BERBASIS WORD ERROR RATE (WER)
+--------------------------------------------------------------------------------
+
+Untuk memberikan umpan balik evaluasi secara kuantitatif kepada pengguna, sistem 
+membandingkan teks transkripsi hasil STT (hipotesis) dengan teks kunci jawaban 
+yang diharapkan (referensi).
+
+4.1. Formulasi Matematika Word Error Rate (WER)
+     Kalkulasi kesalahan tingkat kata (word-level error) didasarkan pada rumus:
+     
+                 S + D + I
+           WER = ---------
+                     N
+                     
+     Di mana:
+     * S (Substitution): Jumlah kata yang salah dilafalkan (digantikan oleh kata lain).
+     * D (Deletion): Jumlah kata referensi yang terlewat atau tidak terucap.
+     * I (Insertion): Jumlah kata tambahan yang diucapkan namun tidak ada pada referensi.
+     * N (Total Words): Jumlah total kata yang ada pada teks referensi asli.
+
+4.2. Algoritma Jarak Levenshtein (Levenshtein Distance)
+     Untuk menghitung nilai S, D, dan I secara akurat, sistem mengimplementasikan 
+     algoritma pemrograman dinamis Levenshtein Distance pada tingkat kata:
+     * Teks referensi dan hipotesis dipecah menjadi list kata individual.
+     * Dibentuk matriks jarak berukuran (len(Ref)+1) x (len(Hyp)+1).
+     * Pengisian matriks dilakukan secara iteratif dengan aturan operasi minimal:
+       cost = 0 jika kata cocok, cost = 1 jika berbeda.
+       Nilai setiap sel dihitung berdasarkan biaya minimum dari operasi substitusi, 
+       penghapusan, dan penyisipan kata.
+     * Sel terakhir pada matriks menunjukkan jumlah total operasi kesalahan terkecil.
+
+4.3. Konversi Skor Akurasi Pembelajaran
+     Hasil perhitungan persentase kesalahan (WER) dikonversi menjadi persentase 
+     akurasi pelafalan dengan batas bawah 0%:
+     
+           Akurasi (%) = Max( 0.0, ( 1.0 - WER ) * 100 )
+           
+     Skor akurasi inilah yang dikirim kembali ke frontend untuk ditampilkan sebagai 
+     umpan balik langsung kepada pengguna. Jika akurasi mencapai >= 80%, pelafalan 
+     dinyatakan memenuhi standar kompetensi materi.
+
+--------------------------------------------------------------------------------
+5. SIKLUS ALUR KERJA INTEGRASI SISTEM
+--------------------------------------------------------------------------------
+
+Alur integrasi dua modul ini membentuk satu siklus interaksi pembelajaran bahasa 
+dua arah (two-way interactive learning cycle):
+
+   +--------------------------------------------------------+
+   | 1. Pengguna memilih materi kata / kalimat Aksara Sunda |
+   +---------------------------+----------------------------+
+                               |
+                               v
+   +--------------------------------------------------------+
+   | 2. Modul TTS (VITS) mensintesis teks -> File Audio WAV |
+   +---------------------------+----------------------------+
+                               |
+                               v
+   +--------------------------------------------------------+
+   | 3. Pengguna mendengarkan audio instruktur virtual      |
+   +---------------------------+----------------------------+
+                               |
+                               v
+   +--------------------------------------------------------+
+   | 4. Pengguna menekan tombol rekam & melafalkan aksara   |
+   +---------------------------+----------------------------+
+                               |
+                               v
+   +--------------------------------------------------------+
+   | 5. Modul STT (Wav2Vec2) transkripsi audio -> Teks      |
+   +---------------------------+----------------------------+
+                               |
+                               v
+   +--------------------------------------------------------+
+   | 6. Modul WER mengevaluasi akurasi teks hipotesis       |
+   +---------------------------+----------------------------+
+                               |
+                               v
+   +--------------------------------------------------------+
+   | 7. Skor akurasi ditampilkan secara instan ke pengguna |
+   +--------------------------------------------------------+
+
+Siklus ini berjalan secara *real-time* di mana komunikasi data dari frontend ke 
+backend dijembatani melalui REST API yang cepat, stabil, dan modular.
+================================================================================

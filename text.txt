@@ -1,0 +1,557 @@
+PROPOSAL TUGAS BESAR 
+APLIKASI PEMBELAJARAN AKSARA SUNDA BERBASIS 
+TEXT-TO-SPEECH DAN SPEECH-TO-TEXT 
+Untuk memenuhi Tugas Akhir Mata Kuliah IFB-306 PENGENALAN UCAPAN DAN TEKS 
+KE UCAPAN CC diberikan oleh Bapak ASEP NANA HERMANA S.T., M.T. . 
+Ditulis oleh: 
+Grup – C6 
+15-2023-057 - Fathurrahman Pratama Putra 
+15-2023-062 - Riandika Fildani 
+15-2023-073 - Dindin Imanudin 
+15-2023-109 - Riza Maulana Tamsirin  
+Tgl. Penugasan :  25 – Februari – 2026 
+Tgl. Penyerahan :  27 – Februari – 2026 
+Prodi Informatika 
+Fakultas Teknologi Industri 
+Institut Teknologi Nasional 
+Bandung 
+2025/2026 
+ii 
+ 
+DAFTAR ISI 
+ 
+DAFTAR ISI ................................................................................................................................... ii 
+BAB I PENDAHULUAN ............................................................................................................... 1 
+1.1 Latar belakang ............................................................................................................ 1 
+1.2 Rumusan Masalah ...................................................................................................... 2 
+1.3 Tujuan penelitian ....................................................................................................... 2 
+1.4 Manfaat Penelitian ..................................................................................................... 2 
+1.5 Batasan Masalah ......................................................................................................... 3 
+1.6 Sistematika Penulisan ................................................................................................ 4 
+BAB II LANDASAN TEORI......................................................................................................... 6 
+2.1. Konsep Dasar Speech-to-Text (STT) dan Text-to-Speech (TTS) ............................ 6 
+2.2. Model Meta MMS (Massively Multilingual Speech) ............................................... 6 
+2.3. Penilaian Akurasi dengan Word Error Rate (WER) ................................................ 7 
+BAB III  METODOLOGI PENELITIAN DAN PERANCANGAN SISTEM ......................... 9 
+3.1 Metode dan Pendekatan Penelitian .......................................................................... 9 
+3.1.1. Analisis Kebutuhan Sistem dan Pengguna .......................................................... 9 
+3.1.2. Metode Pengembangan Sistem ............................................................................ 10 
+3.2 Perancangan Sistem ................................................................................................. 10 
+3.2.1. Desain Arsitektur Aplikasi .................................................................................. 11 
+3.2.2. Alur Kerja Sistem ................................................................................................. 11 
+3.2.3. Perancangan Interaksi Pengguna ....................................................................... 12 
+3.3 Implementasi Teknologi Speech dan Sintesis Suara ............................................. 12 
+3.3.1. Implementasi Speech-to-Text (STT) ................................................................... 13 
+3.3.2. Implementasi Text-to-Speech (TTS) ................................................................... 13 
+3.3.3. Integrasi STT dan TTS dalam Sistem ................................................................ 14 
+3.4. Metode Evaluasi dan Pengujian Sistem ................................................................. 14 
+3.4.1. Pengujian Fungsional Sistem .............................................................................. 15 
+3.4.2. Evaluasi Kinerja Speech-to-Text (STT) ............................................................. 15 
+3.4.3. Evaluasi Kualitas Text-to-Speech (TTS) ............................................................ 16 
+3.4.4. Pengujian Pengguna (User Testing) ................................................................... 16 
+BAB IV  PENUTUP ..................................................................................................................... 17 
+4.1 Kesimpulan ............................................................................................................... 17 
+4.2 Rencana Tahapan Penelitian ................................................................................... 17 
+DAFTAR PUSTAKA ................................................................................................................... 18 
+BAB I 
+PENDAHULUAN 
+1.1 Latar belakang 
+Pelestarian budaya daerah merupakan bagian penting dalam menjaga identitas bangsa. Salah 
+satu warisan budaya masyarakat Jawa Barat adalah Aksara Sunda, yang memiliki nilai sejarah dan 
+linguistik dalam penulisan bahasa Sunda. Namun, seiring perkembangan teknologi dan 
+modernisasi, penggunaan aksara Sunda semakin jarang digunakan dalam kehidupan sehari-hari. 
+Generasi muda lebih terbiasa menggunakan aksara Latin, sehingga tingkat pemahaman terhadap 
+aksara Sunda semakin menurun. 
+Proses pembelajaran aksara Sunda saat ini masih banyak dilakukan secara konvensional 
+melalui buku cetak dan pembelajaran di kelas. Metode tersebut cenderung kurang interaktif dan 
+kurang menarik bagi generasi muda yang sudah terbiasa dengan teknologi digital. Oleh karena itu, 
+diperlukan inovasi pembelajaran yang lebih modern, interaktif, dan memanfaatkan teknologi agar 
+minat belajar terhadap aksara Sunda dapat meningkat. 
+Perkembangan teknologi kecerdasan buatan, khususnya dalam bidang pengolahan bahasa 
+dan suara, memungkinkan terciptanya sistem pembelajaran yang lebih efektif. Teknologi Text-to
+Speech (TTS) memungkinkan sistem mengubah teks menjadi suara secara otomatis, sedangkan 
+Speech-to-Text (STT) memungkinkan suara pengguna diubah menjadi teks. Dengan 
+menggabungkan kedua teknologi ini, aplikasi pembelajaran dapat memberikan pengalaman belajar 
+yang lebih interaktif, seperti latihan membaca dengan umpan balik suara dan latihan pengucapan 
+dengan evaluasi otomatis. 
+Berdasarkan permasalahan tersebut, penelitian ini bertujuan untuk mengembangkan sebuah 
+aplikasi pembelajaran aksara Sunda berbasis integrasi teknologi Text-to-Speech (TTS) dan 
+Speech-to-Text (STT) yang dirancang secara interaktif dan adaptif. Sistem tidak hanya menyajikan 
+materi dalam bentuk suara otomatis, tetapi juga memungkinkan pengguna melakukan latihan 
+pengucapan yang dievaluasi secara langsung melalui hasil konversi suara ke teks. Dengan 
+pendekatan ini, proses pembelajaran menjadi lebih aktif karena pengguna memperoleh umpan 
+balik otomatis terhadap kesesuaian pengucapan. Implementasi sistem dilakukan dalam bentuk 
+aplikasi berbasis bahasa pemrograman sehingga dapat dikembangkan dan diuji secara nyata 
+sebagai solusi pembelajaran digital. 
+1 
+Pendekatan ini memberikan nilai inovatif karena sistem tidak hanya berfungsi sebagai media 
+penyampaian materi, tetapi juga sebagai evaluator otomatis kemampuan pengucapan pengguna 
+secara real-time. 
+1.2 Rumusan Masalah 
+Berdasarkan latar belakang yang telah diuraikan sebelumnya, maka rumusan masalah dalam 
+pengembangan APLIKASI PEMBELAJARAN AKSARA SUNDA BERBASIS TEXT-TO
+SPEECH DAN SPEECH-TO-TEXT ini adalah sebagai berikut: 
+1. Bagaimana merancang arsitektur aplikasi pembelajaran aksara Sunda yang terintegrasi 
+dengan teknologi Text-to-Speech dan Speech-to-Text? 
+2. Bagaimana mengimplementasikan teknologi Text-to-Speech untuk membacakan teks atau 
+aksara Sunda secara otomatis? 
+• Bagaimana mengimplementasikan dan mengevaluasi teknologi Speech-to-Text dalam 
+mengenali pengucapan pengguna? 
+3. Bagaimana efektivitas penggunaan fitur suara dalam membantu pengguna memahami 
+aksara Sunda? 
+1.3 Tujuan penelitian 
+Tujuan dari pengembangan aplikasi APLIKASI PEMBELAJARAN AKSARA SUNDA 
+BERBASIS TEXT-TO-SPEECH DAN SPEECH-TO-TEXT ini adalah sebagai berikut: 
+1. Mengembangkan aplikasi pembelajaran aksara Sunda berbasis Text-to-Speech dan 
+Speech-to-Text. 
+2. Mengintegrasikan fitur suara untuk mendukung proses membaca dan pengucapan aksara 
+Sunda. 
+3. Meningkatkan minat dan pemahaman pengguna terhadap aksara Sunda melalui media 
+pembelajaran digital yang interaktif. 
+1.4 Manfaat Penelitian 
+Adapun manfaat dari pengembangan aplikasi APLIKASI PEMBELAJARAN AKSARA 
+SUNDA BERBASIS TEXT-TO-SPEECH DAN SPEECH-TO-TEXT adalah sebagai berikut: 
+2 
+1. Manfaat Akademik 
+Penelitian ini dapat menjadi referensi dalam pengembangan sistem pembelajaran berbasis 
+teknologi suara, khususnya integrasi Text-to-Speech dan Speech-to-Text dalam 
+pembelajaran bahasa daerah. Selain itu, penelitian ini juga menambah kajian mengenai 
+penerapan kecerdasan buatan dalam pelestarian budaya lokal. 
+2. Manfaat Praktis 
+Aplikasi yang dikembangkan dapat menjadi media pembelajaran aksara Sunda yang lebih 
+interaktif dibandingkan metode konvensional. Fitur TTS membantu pengguna memahami 
+pelafalan, sedangkan fitur STT memungkinkan latihan pengucapan dengan umpan balik 
+otomatis. 
+3. Manfaat Budaya 
+Penelitian ini mendukung pelestarian aksara Sunda melalui pemanfaatan teknologi digital, 
+sehingga dapat meningkatkan minat generasi muda dalam mempelajari aksara daerah. 
+1.5 Batasan Masalah 
+Agar pembahasan tidak terlalu luas, maka batasan masalah dalam pengembangan aplikasi 
+APLIKASI PEMBELAJARAN AKSARA SUNDA BERBASIS TEXT-TO-SPEECH DAN 
+SPEECH-TO-TEXT ini adalah sebagai berikut: 
+1. Ruang Lingkup Materi Pembelajaran 
+Materi yang disajikan dalam aplikasi terbatas pada pengenalan dasar aksara Sunda, 
+termasuk huruf dasar, pasangan huruf, serta pembacaan kata sederhana. Penelitian ini tidak 
+membahas secara mendalam tata bahasa Sunda tingkat lanjut atau kajian filologis aksara 
+Sunda klasik. 
+2. Fitur Text-to-Speech (TTS) 
+Fitur Text-to-Speech dalam aplikasi digunakan untuk mengubah teks hasil transliterasi 
+atau teks pembelajaran menjadi suara. Sistem tidak melakukan pengembangan model TTS 
+dari awal (training model baru), melainkan memanfaatkan model yang sudah tersedia dan 
+telah dilatih sebelumnya. 
+3. Fitur Speech-to-Text (STT) 
+Fitur Speech-to-Text digunakan untuk mengenali suara pengguna saat melakukan 
+latihan pengucapan. Hasil pengenalan suara akan dikonversi menjadi teks untuk 
+dibandingkan dengan jawaban yang benar. Penelitian ini tidak membahas pengembangan 
+3 
+algoritma pengenalan suara secara mendalam, melainkan fokus pada integrasinya dalam 
+aplikasi pembelajaran. 
+4. Platform dan Implementasi Sistem 
+Aplikasi dikembangkan dalam bentuk prototipe atau sistem berbasis web/mobile 
+(sesuai rancangan penelitian). Penelitian ini tidak membahas pengembangan sistem 
+berskala besar atau distribusi komersial. 
+5. Pengujian Sistem 
+Pengujian dilakukan pada kelompok pengguna terbatas, seperti siswa atau mahasiswa, 
+untuk mengetahui tingkat efektivitas dan respons pengguna terhadap aplikasi. Penelitian ini 
+tidak mencakup pengujian skala nasional atau evaluasi jangka panjang. 
+6. Fokus Penelitian 
+Penelitian ini berfokus pada aspek pengembangan sistem dan integrasi teknologi suara 
+dalam pembelajaran aksara Sunda, bukan pada analisis linguistik mendalam atau 
+pengembangan kurikulum pendidikan formal. 
+Dengan adanya batasan-batasan tersebut, penelitian ini diharapkan dapat berjalan secara 
+terarah, sistematis, dan sesuai dengan tujuan yang telah ditetapkan. 
+1.6 Sistematika Penulisan  
+Sistematika penulisan dalam penyusunan laporan Proposal Aplikasi APLIKASI 
+PEMBELAJARAN AKSARA SUNDA BERBASIS TEXT-TO-SPEECH DAN SPEECH-TO
+TEXT ini disusun sebagai berikut: 
+BAB I PENDAHULUAN 
+Bab ini membahas latar belakang yang mendasari pentingnya pengembangan 
+aplikasi pembelajaran aksara Sunda berbasis Text-to-Speech dan Speech-to-Text. 
+Selain itu, dijelaskan pula rumusan masalah yang menjadi fokus penelitian, tujuan 
+yang ingin dicapai, manfaat penelitian, batasan masalah agar penelitian lebih terarah, 
+serta sistematika penulisan proposal secara keseluruhan. 
+BAB II LANDASAN TEORI 
+Bab ini berisi teori dan konsep yang menjadi dasar dalam penelitian, meliputi 
+pembahasan tentang aksara Sunda, prinsip kerja teknologi Text-to-Speech dan 
+4 
+Speech-to-Text, serta konsep pembelajaran berbasis teknologi digital. Teori-teori 
+tersebut digunakan sebagai landasan dalam perancangan dan pengembangan sistem. 
+BAB III METODOLOGI PENELITIAN DAN PERANCANGAN SISTEM 
+Bab ini menjelaskan metode yang digunakan dalam penelitian, termasuk 
+pendekatan pengembangan sistem, perancangan arsitektur aplikasi, tahapan 
+implementasi fitur, serta rencana pengujian untuk mengetahui kinerja dan 
+efektivitas sistem yang dikembangkan. 
+BAB IV PENUTUP 
+Bab ini berisi kesimpulan dari perencanaan penelitian serta gambaran hasil yang 
+diharapkan dan arah pengembangan selanjutnya. 
+5 
+BAB II 
+LANDASAN TEORI 
+2.1. 
+Konsep Dasar Speech-to-Text (STT) dan Text-to-Speech (TTS) 
+Pengembangan aplikasi pembelajaran bahasa yang interaktif sangat bergantung pada dua 
+teknologi utama dalam bidang pemrosesan sinyal digital dan kecerdasan buatan, yaitu Speech-to
+Text (STT) dan Text-to-Speech (TTS). Kedua teknologi ini bertindak sebagai jembatan komunikasi 
+dua arah yang menjembatani interaksi antara sistem komputer dan pengguna manusia. 
+a. Speech-to-Text (STT) / Pengenalan Ucapan (ASR) 
+STT, yang dalam literatur akademis sering disebut sebagai Automatic Speech 
+Recognition (ASR), adalah teknologi yang memungkinkan komputer untuk menerima 
+masukan berupa sinyal suara (akustik) dan mentranskripsikannya menjadi rangkaian kata 
+dalam bentuk teks digital. Dalam konteks aplikasi pembelajaran bahasa ini, STT berfungsi 
+sebagai "telinga" sistem. Saat pengguna berlatih melafalkan kosakata atau kalimat Bahasa 
+Sunda, model STT akan memproses audio rekaman tersebut dan mengubahnya menjadi 
+teks. Teks hasil transkripsi inilah yang kemudian digunakan oleh sistem untuk 
+mengevaluasi seberapa tepat pelafalan pengguna. 
+b. Text-to-Speech (TTS) / Sintesis Suara 
+Sebaliknya, TTS adalah teknologi yang secara otomatis mengubah teks tertulis menjadi 
+ucapan buatan (audio) yang dapat didengarkan. Sistem TTS modern menggunakan 
+pendekatan deep learning untuk menghasilkan suara dengan intonasi, jeda, dan pelafalan 
+yang terdengar natural menyerupai penutur asli (native speaker). Pada aplikasi ini, TTS 
+berperan sebagai instruktur virtual. Sistem menggunakan TTS untuk mengonversi teks 
+materi pelajaran Bahasa Sunda menjadi contoh audio pelafalan yang benar, sehingga 
+pengguna dapat melatih kemampuan pendengaran (listening) dan meniru cara pengucapan 
+secara mandiri. 
+2.2. 
+Model Meta MMS (Massively Multilingual Speech) 
+Massively Multilingual Speech (MMS) merupakan arsitektur kecerdasan buatan mutakhir 
+yang dikembangkan oleh Meta (Facebook AI Research) dengan tujuan mengatasi ketimpangan 
+teknologi ucapan pada bahasa-bahasa di dunia. Model ini dirancang khusus untuk menangani 
+6 
+bahasa daerah yang memiliki ketersediaan dataset audio dan teks yang sangat terbatas (low
+resource languages), seperti halnya Bahasa Sunda. Dalam pengembangan aplikasi pembelajaran 
+ini, ekosistem MMS diimplementasikan secara komprehensif untuk menangani tugas Speech-to
+Text (STT) dan Text-to-Speech (TTS) sekaligus. Penggunaan satu ekosistem yang seragam ini 
+bertujuan untuk menciptakan arsitektur sistem yang konsisten dan efisien dalam memproses 
+interaksi suara pengguna. 
+Untuk fungsi pengenalan ucapan (STT), MMS dibangun berlandaskan arsitektur wav2vec 
+2.0 yang memanfaatkan pendekatan pembelajaran mandiri (self-supervised learning). Melalui 
+pendekatan ini, model terlebih dahulu mempelajari struktur dasar suara manusia dari ratusan ribu 
+jam audio mentah tanpa label teks, sebelum akhirnya disesuaikan (fine-tuned) secara spesifik untuk 
+mengenali Bahasa Sunda. Hal ini membuat STT pada MMS sangat tangguh dalam mentranskripsi 
+pelafalan pengguna meskipun dilatih dengan data yang terbatas. Sementara itu, untuk fungsi 
+sintesis suara (TTS), MMS menggunakan arsitektur End-to-End berbasis deep learning yang 
+menggabungkan pemrosesan teks dan penghasil suara ke dalam satu jaringan secara langsung. 
+Teknologi ini memungkinkan teks materi Bahasa Sunda disintesis menjadi gelombang suara 
+(waveform) dengan intonasi yang natural, jernih, dan menyerupai penutur asli dibandingkan 
+dengan metode sintesis tradisional. 
+2.3. 
+Penilaian Akurasi dengan Word Error Rate (WER) 
+Dalam sebuah sistem pembelajaran bahasa interaktif, fitur evaluasi pelafalan merupakan 
+komponen yang sangat krusial untuk memberikan umpan balik (feedback) kepada pengguna. Pada 
+aplikasi ini, akurasi pelafalan pengguna diukur menggunakan metrik standar evaluasi sistem 
+Speech-to-Text (STT) yang dikenal sebagai Word Error Rate (WER). Metrik ini bekerja dengan 
+cara membandingkan teks referensi, yang merupakan kunci jawaban atau materi yang seharusnya 
+diucapkan, dengan teks hipotesis yang dihasilkan oleh sistem STT setelah mendengarkan suara 
+pengguna. WER menghitung seberapa banyak kesalahan tingkat kata yang terjadi selama proses 
+transkripsi berdasarkan jarak Levenshtein (Levenshtein distance). 
+Secara matematis, Word Error Rate dihitung dengan menjumlahkan tiga jenis kesalahan 
+utama yang mungkin terjadi saat menyelaraskan teks hipotesis dengan teks referensi. Ketiga 
+kesalahan tersebut adalah Substitution (S) atau kata yang tertukar, Deletion (D) atau kata yang 
+terlewat, dan Insertion (I) atau kata tambahan yang tidak seharusnya ada. Jumlah dari ketiga 
+7 
+kesalahan ini kemudian dibagi dengan total jumlah kata yang terdapat pada teks referensi (N). 
+Persamaan perhitungan WER dapat dirumuskan sebagai berikut: 
+�
+�𝐸𝑅 =𝑆+𝐷+𝐼
+𝑁
+Hasil dari perhitungan WER tersebut kemudian dikonversi menjadi persentase akurasi yang 
+digunakan sebagai skor akhir pengguna. Semakin rendah nilai WER yang diperoleh, semakin 
+sedikit kesalahan pelafalan yang dilakukan, yang mengindikasikan bahwa ucapan pengguna 
+semakin mendekati pelafalan penutur asli (native speaker) pada kunci jawaban. 
+8 
+BAB III  
+METODOLOGI PENELITIAN DAN PERANCANGAN SISTEM 
+Bab ini menjelaskan metode pengembangan sistem, perancangan aplikasi, serta tahapan 
+implementasi dalam pembangunan Aplikasi Pembelajaran Aksara Sunda berbasis Text-to-Speech 
+dan Speech-to-Text. Metodologi mencakup pendekatan penelitian, desain arsitektur aplikasi, 
+integrasi model Massively Multilingual Speech (MMS), serta metode evaluasi menggunakan Word 
+Error Rate (WER) untuk mengukur akurasi pengenalan ucapan. Implementasi sistem dilakukan 
+menggunakan bahasa pemrograman Python sebagai inti pengembangan backend dan integrasi 
+model STT serta TTS. Framework yang digunakan disesuaikan dengan kebutuhan sistem, seperti 
+FastAPI atau framework sejenis untuk pengelolaan layanan aplikasi. Pemilihan Python didasarkan 
+pada ketersediaan pustaka pengolahan suara dan dukungan luas terhadap model pembelajaran 
+mendalam.  
+Pengembangan sistem dirancang dengan konsep pembelajaran interaktif, di mana pengguna 
+tidak hanya menerima materi secara pasif, tetapi juga melakukan latihan pengucapan dan 
+memperoleh umpan balik secara langsung. Model interaksi ini menyerupai aplikasi pembelajaran 
+bahasa modern yang mengutamakan latihan bertahap, evaluasi otomatis, dan pemberian skor 
+sebagai motivasi belajar. 
+3.1 Metode dan Pendekatan Penelitian 
+Penelitian ini menggunakan pendekatan Research and Development (R&D) yang berorientasi 
+pada pengembangan produk sekaligus pengujian performa sistem. Pendekatan ini dipilih karena 
+penelitian tidak hanya menganalisis teori pengenalan ucapan, tetapi juga mengimplementasikannya 
+dalam bentuk aplikasi pembelajaran yang dapat digunakan secara nyata. 
+Tahapan penelitian dilakukan secara sistematis meliputi analisis kebutuhan sistem dan 
+pengguna, perancangan arsitektur aplikasi, implementasi modul Text-to-Speech dan Speech-to
+Text, integrasi modul evaluasi berbasis Word Error Rate, serta pengujian dan analisis performa 
+sistem. 
+3.1.1. Analisis Kebutuhan Sistem dan Pengguna 
+Analisis kebutuhan dilakukan untuk menentukan spesifikasi sistem yang sesuai dengan 
+tujuan pembelajaran. Dari sisi pengguna, aplikasi harus mampu menyajikan materi aksara Sunda 
+9 
+secara jelas, menyediakan contoh pelafalan, serta memberikan latihan pengucapan dengan evaluasi 
+otomatis. Kebutuhan fungsional sistem meliputi: 
+1. Menampilkan materi aksara dan transliterasi dalam bentuk teks. 
+2. Menghasilkan suara otomatis sebagai contoh pelafalan menggunakan TTS. 
+3. Merekam dan memproses suara pengguna menggunakan STT. 
+4. Menghitung tingkat kesalahan pengucapan. 
+5. Memberikan skor atau indikator keberhasilan secara langsung. 
+Kebutuhan non-fungsional meliputi: 
+1. Antarmuka sederhana dan mudah dipahami. 
+2. Respons sistem yang cepat agar latihan terasa interaktif. 
+3. Stabilitas sistem saat memproses input suara dengan variasi pengucapan. 
+Analisis ini menjadi dasar dalam menentukan desain sistem yang tidak hanya akurat secara 
+teknis, tetapi juga mendukung pengalaman belajar yang efektif. 
+3.1.2. Metode Pengembangan Sistem 
+Metode pengembangan sistem dilakukan secara bertahap mulai dari perancangan 
+konseptual hingga implementasi teknis. Model pengembangan yang digunakan bersifat iteratif, di 
+mana setiap modul diuji setelah dikembangkan sebelum diintegrasikan dengan modul lain. 
+Tahapan pengembangan meliputi: 
+1. Perancangan struktur aplikasi dan alur interaksi pengguna. 
+2. Implementasi modul TTS sebagai penyedia contoh pelafalan. 
+3. Implementasi modul STT sebagai evaluator pengucapan. 
+4. Integrasi modul evaluasi berbasis WER. 
+5. Pengujian sistem secara menyeluruh. 
+Pendekatan ini memastikan bahwa setiap komponen bekerja dengan baik sebelum sistem 
+digunakan secara utuh. 
+3.2 
+Perancangan Sistem 
+Perancangan sistem dilakukan untuk mendefinisikan struktur aplikasi, hubungan antar 
+komponen, serta alur pemrosesan data dari input hingga menghasilkan umpan balik kepada 
+pengguna. Tahap ini bertujuan memastikan bahwa seluruh fitur yang telah diidentifikasi pada 
+analisis kebutuhan dapat direalisasikan dalam bentuk arsitektur yang terstruktur, modular, dan 
+terintegrasi. 
+10 
+Sistem dirancang dengan pendekatan modular agar setiap komponen utama materi 
+pembelajaran, Text-to-Speech (TTS), Speech-to-Text (STT), serta modul evaluasi dapat 
+dikembangkan dan diuji secara terpisah sebelum digabungkan menjadi satu sistem utuh. 
+Pendekatan ini mempermudah proses pengembangan, pemeliharaan, serta pengujian performa 
+masing-masing modul. 
+3.2.1. Desain Arsitektur Aplikasi 
+Arsitektur aplikasi terdiri atas beberapa komponen utama yang saling terhubung melalui 
+alur data yang terstruktur. Komponen tersebut meliputi: 
+1. Modul Materi Pembelajaran, Modul ini bertugas menampilkan konten aksara Sunda 
+dalam bentuk teks dan transliterasi. Materi dapat berupa huruf dasar, suku kata, maupun 
+kalimat sederhana yang digunakan sebagai bahan latihan. 
+2. Modul Text-to-Speech (TTS), Modul ini berfungsi mengubah teks materi menjadi 
+sinyal audio sebagai contoh pelafalan yang benar. Audio yang dihasilkan menjadi 
+referensi bagi pengguna sebelum melakukan latihan pengucapan. 
+3. Modul Speech-to-Text (STT). Modul ini menerima input suara dari pengguna melalui 
+perangkat mikrofon, kemudian memprosesnya menjadi teks digital menggunakan 
+model pengenalan ucapan. 
+4. Modul Evaluasi (WER), Modul evaluasi membandingkan teks hasil transkripsi STT 
+dengan teks referensi yang terdapat pada materi. Perbandingan dilakukan menggunakan 
+metode Word Error Rate untuk menghitung tingkat kesalahan pengucapan. 
+5. Antarmuka Pengguna (User Interface), Antarmuka berfungsi sebagai media interaksi 
+antara pengguna dan sistem. Komponen ini mengatur tampilan materi, tombol rekam, 
+pemutaran audio, serta penyajian skor evaluasi. 
+Struktur ini membentuk sistem yang terintegrasi, di mana setiap modul memiliki fungsi 
+spesifik namun tetap saling mendukung dalam proses pembelajaran. 
+3.2.2. Alur Kerja Sistem 
+Alur kerja sistem dirancang menyerupai siklus latihan pembelajaran bahasa yang interaktif. 
+Proses dimulai ketika pengguna memilih materi yang ingin dipelajari. Sistem kemudian 
+menampilkan teks aksara Sunda dan secara otomatis mengaktifkan modul TTS untuk membacakan 
+teks tersebut sebagai contoh pelafalan. Setelah mendengarkan contoh, pengguna menekan tombol 
+rekam dan mengucapkan teks yang sama. Suara yang direkam dikirim ke modul STT untuk 
+diproses menjadi teks transkripsi. Proses ini melibatkan konversi sinyal suara ke representasi 
+digital yang kemudian dipetakan menjadi rangkaian kata atau karakter. 
+11 
+Teks hasil transkripsi dibandingkan dengan teks referensi menggunakan modul evaluasi 
+berbasis WER. Sistem menghitung jumlah kesalahan berupa substitusi, penghapusan, maupun 
+penambahan kata. Berdasarkan hasil perhitungan tersebut, sistem menghasilkan nilai akurasi dalam 
+bentuk persentase. Nilai akurasi ini kemudian ditampilkan kepada pengguna sebagai umpan balik 
+langsung. Jika nilai masih rendah, pengguna dapat mengulang latihan hingga mencapai tingkat 
+ketepatan yang lebih baik. Dengan demikian, sistem membentuk pola belajar berulang (iterative 
+learning cycle) yang mendorong peningkatan kemampuan secara bertahap. 
+3.2.3. Perancangan Interaksi Pengguna 
+Perancangan interaksi pengguna difokuskan pada kesederhanaan dan kemudahan 
+penggunaan. Aplikasi dirancang agar pengguna dapat memahami alur latihan tanpa memerlukan 
+instruksi yang kompleks. Elemen utama yang ditampilkan pada antarmuka meliputi: 
+1. Teks aksara Sunda dan transliterasi 
+2. Tombol pemutaran audio (contoh pelafalan) 
+3. Tombol rekam suara 
+4. Tampilan hasil transkripsi 
+5. Skor atau persentase akurasi 
+Interaksi dirancang dengan prinsip umpan balik langsung (immediate feedback), di mana 
+pengguna tidak perlu menunggu lama untuk mengetahui hasil pengucapannya. Hal ini penting 
+untuk menjaga motivasi belajar serta meningkatkan efektivitas latihan. 
+Secara keseluruhan, tahap perancangan sistem memastikan bahwa aplikasi memiliki 
+struktur yang jelas, alur kerja yang logis, serta mekanisme evaluasi yang terintegrasi. Desain ini 
+menjadi dasar bagi tahap implementasi teknologi Speech-to-Text dan Text-to-Speech yang akan 
+dijelaskan pada bagian berikutnya. 
+3.3 
+Implementasi Teknologi Speech dan Sintesis Suara 
+Implementasi teknologi speech pada penelitian ini berfokus pada integrasi dua komponen 
+utama, yaitu Speech-to-Text (STT) dan Text-to-Speech (TTS). Kedua teknologi ini menjadi inti 
+dari sistem pembelajaran interaktif karena berperan sebagai mekanisme input dan output suara 
+dalam aplikasi. Implementasi dilakukan dengan memanfaatkan model berbasis deep learning yang 
+mampu menangani pemrosesan bahasa secara otomatis. 
+Teknologi yang digunakan dalam penelitian ini mengacu pada model Massively 
+Multilingual Speech (MMS), yang dirancang untuk mendukung berbagai bahasa, termasuk bahasa 
+12 
+dengan sumber daya terbatas. Model ini diintegrasikan ke dalam sistem melalui proses konfigurasi 
+dan pemanggilan model pada sisi aplikasi. 
+3.3.1. Implementasi Speech-to-Text (STT) 
+Modul Speech-to-Text berfungsi untuk mengubah sinyal suara pengguna menjadi teks 
+digital yang dapat dianalisis oleh sistem. Proses implementasi STT dalam aplikasi melibatkan 
+beberapa tahapan teknis. 
+1. Pertama, sistem melakukan perekaman suara melalui perangkat mikrofon pengguna. 
+Sinyal audio yang diperoleh kemudian dikonversi menjadi format digital dengan 
+parameter tertentu seperti sampling rate dan durasi rekaman yang telah ditentukan. 
+2. Kedua, dilakukan tahap preprocessing sinyal untuk meningkatkan kualitas audio 
+sebelum diproses oleh model. Tahapan ini dapat mencakup normalisasi amplitudo dan 
+pengurangan noise sederhana agar suara lebih jelas dan stabil. 
+3. Ketiga, audio yang telah diproses dimasukkan ke dalam model STT. Model akan 
+melakukan ekstraksi fitur akustik secara otomatis menggunakan arsitektur berbasis 
+pembelajaran mendalam. Fitur-fitur ini merepresentasikan karakteristik suara dalam 
+bentuk vektor numerik yang kemudian dipetakan menjadi rangkaian karakter atau kata 
+melalui proses decoding. 
+Hasil akhir dari modul STT berupa teks transkripsi yang merepresentasikan ucapan 
+pengguna. Teks ini kemudian diteruskan ke modul evaluasi untuk dibandingkan dengan teks 
+referensi. Implementasi STT ini dirancang agar dapat memproses input suara secara relatif cepat 
+sehingga pengguna memperoleh hasil evaluasi tanpa jeda yang mengganggu proses belajar. 
+3.3.2. Implementasi Text-to-Speech (TTS) 
+Modul Text-to-Speech berfungsi mengubah teks materi pembelajaran menjadi sinyal audio 
+yang dapat didengarkan oleh pengguna. Implementasi TTS dilakukan untuk menyediakan contoh 
+pelafalan yang benar sebelum pengguna melakukan latihan pengucapan. Proses TTS dimulai dari 
+input berupa teks aksara Sunda atau transliterasinya. Teks tersebut kemudian diproses oleh model 
+sintesis suara berbasis deep learning yang secara otomatis mengubah representasi teks menjadi 
+representasi fonetik internal. Model kemudian memprediksi parameter akustik yang diperlukan 
+untuk menghasilkan gelombang suara. 
+13 
+Tahap akhir adalah proses generasi waveform, yaitu pembentukan sinyal audio yang dapat 
+diputar melalui perangkat speaker. Audio yang dihasilkan dirancang agar memiliki intonasi dan 
+kejelasan yang cukup baik sehingga dapat dijadikan acuan pelafalan bagi pengguna. Implementasi 
+TTS dalam aplikasi dilakukan secara terintegrasi dengan antarmuka pengguna. Ketika pengguna 
+memilih materi atau menekan tombol putar, sistem secara otomatis memanggil modul TTS dan 
+menghasilkan audio sesuai teks yang ditampilkan. 
+3.3.3. Integrasi STT dan TTS dalam Sistem 
+Integrasi STT dan TTS dilakukan agar sistem mampu membentuk komunikasi dua arah 
+antara pengguna dan aplikasi. TTS berperan sebagai penyedia contoh pelafalan, sedangkan STT 
+berperan sebagai evaluator pengucapan. Alur integrasi berlangsung sebagai berikut: 
+1. Sistem menampilkan teks materi. 
+2. Modul TTS menghasilkan audio sebagai contoh pelafalan. 
+3. Pengguna mengucapkan teks yang sama. 
+4. Modul STT mengubah suara menjadi teks transkripsi. 
+5. Teks hasil transkripsi dikirim ke modul evaluasi untuk dihitung tingkat kesalahannya. 
+Integrasi ini memastikan bahwa seluruh proses pembelajaran berlangsung dalam satu siklus 
+interaktif. Dengan adanya dua modul tersebut, aplikasi tidak hanya berfungsi sebagai penyaji 
+materi, tetapi juga sebagai evaluator otomatis yang memberikan umpan balik secara langsung. 
+Secara keseluruhan, implementasi teknologi Speech dan Sintesis Suara dalam penelitian ini 
+memungkinkan terciptanya sistem pembelajaran yang aktif, adaptif, dan berbasis evaluasi 
+kuantitatif. Integrasi model STT dan TTS menjadi fondasi utama dalam mendukung proses latihan 
+pengucapan aksara Sunda secara digital. 
+3.4. 
+Metode Evaluasi dan Pengujian Sistem 
+Metode evaluasi dan pengujian sistem dilakukan untuk mengukur kinerja aplikasi dalam 
+mengenali ucapan pengguna serta menghasilkan suara sintesis yang sesuai. Evaluasi ini bertujuan 
+untuk mengetahui tingkat akurasi sistem, stabilitas performa, serta kelayakan aplikasi sebagai 
+media pembelajaran interaktif aksara Sunda. 
+Pengujian dilakukan dalam dua aspek utama, yaitu pengujian fungsional sistem dan 
+pengujian performa teknologi Speech-to-Text (STT) serta Text-to-Speech (TTS). 
+14 
+3.4.1. Pengujian Fungsional Sistem 
+Pengujian fungsional bertujuan untuk memastikan bahwa seluruh fitur aplikasi berjalan 
+sesuai dengan rancangan pada Bab III sebelumnya. Metode yang digunakan adalah pengujian 
+black-box, yaitu pengujian yang berfokus pada keluaran sistem tanpa melihat proses internal 
+program. Beberapa skenario pengujian fungsional yang dilakukan meliputi: 
+1. Pengujian tampilan materi pembelajaran. 
+2. Pengujian tombol pemutar audio (TTS). 
+3. Pengujian fitur perekaman suara pengguna. 
+4. Pengujian proses konversi suara ke teks (STT). 
+5. Pengujian perhitungan tingkat kesalahan pengucapan. 
+6. Pengujian tampilan hasil evaluasi kepada pengguna. 
+Setiap fitur dinyatakan berhasil apabila sistem memberikan keluaran sesuai dengan yang 
+diharapkan tanpa terjadi error atau kegagalan proses. 
+3.4.2. Evaluasi Kinerja Speech-to-Text (STT) 
+Evaluasi kinerja modul STT dilakukan untuk mengukur tingkat akurasi sistem dalam 
+mengenali ucapan pengguna. Metode evaluasi menggunakan perbandingan antara teks referensi 
+(teks yang seharusnya diucapkan) dengan teks hasil transkripsi dari sistem. 
+Pengukuran dilakukan menggunakan metrik Word Error Rate (WER). WER digunakan 
+untuk menghitung tingkat kesalahan pengenalan kata dengan rumus: 
+�
+�𝐸𝑅 =𝑆+𝐷+𝐼
+𝑁
+Keterangan: 
+S (Substitution): jumlah kata yang salah dikenali, 
+D (Deletion): jumlah kata yang hilang, 
+I (Insertion): jumlah kata tambahan, 
+N: jumlah kata pada teks referensi. 
+Semakin kecil nilai WER, maka semakin tinggi tingkat akurasi sistem. 
+Pengujian dilakukan dengan beberapa responden yang mengucapkan sejumlah kata atau 
+kalimat dalam aksara Sunda. Data suara direkam, diproses oleh sistem, kemudian dibandingkan 
+dengan teks referensi untuk menghitung nilai WER rata-rata. Selain akurasi, dilakukan juga 
+15 
+pengujian waktu respons (response time), yaitu waktu yang dibutuhkan sistem sejak proses 
+perekaman selesai hingga hasil evaluasi ditampilkan. 
+3.4.3. Evaluasi Kualitas Text-to-Speech (TTS) 
+Evaluasi TTS dilakukan untuk menilai kualitas suara sintesis yang dihasilkan sistem. 
+Penilaian dilakukan berdasarkan aspek berikut: 
+1. Kejelasan pelafalan. 
+2. Kesesuaian pengucapan dengan teks. 
+3. Stabilitas intonasi suara. 
+4. Kenyamanan saat didengarkan. 
+Metode evaluasi dapat menggunakan pendekatan subjektif melalui kuesioner kepada 
+responden. Responden diminta memberikan penilaian menggunakan skala tertentu, misalnya skala 
+1–5 (sangat kurang hingga sangat baik). Hasil penilaian kemudian dihitung rata-ratanya untuk 
+mengetahui tingkat kualitas sintesis suara secara keseluruhan. 
+3.4.4. Pengujian Pengguna (User Testing) 
+Pengujian pengguna dilakukan untuk mengetahui tingkat kemudahan penggunaan 
+(usability) aplikasi sebagai media pembelajaran. Responden diminta menggunakan aplikasi untuk: 
+1. Mendengarkan contoh pelafalan. 
+2. Melakukan latihan pengucapan. 
+3. Melihat hasil evaluasi. 
+Setelah penggunaan, responden mengisi kuesioner yang mencakup aspek kemudahan 
+navigasi, kejelasan tampilan, kecepatan sistem, dan kepuasan penggunaan. Data dari kuesioner 
+dianalisis secara deskriptif untuk mengetahui apakah aplikasi sudah memenuhi kebutuhan 
+pengguna sebagai media pembelajaran interaktif. 
+Secara keseluruhan, metode evaluasi dan pengujian sistem ini dirancang untuk memastikan 
+bahwa aplikasi tidak hanya berjalan secara teknis, tetapi juga memiliki tingkat akurasi yang baik 
+serta layak digunakan dalam proses pembelajaran pengucapan aksara Sunda berbasis teknologi 
+Speech-to-Text dan Text-to-Speech. 
+16 
+BAB IV  
+PENUTUP 
+4.1 
+Kesimpulan 
+Berdasarkan perumusan masalah dan perancangan sistem yang telah disusun, penelitian ini 
+mengusulkan pengembangan aplikasi pembelajaran aksara Sunda berbasis teknologi Speech-to
+Text (STT) dan Text-to-Speech (TTS). Aplikasi dirancang untuk menyediakan pembelajaran 
+interaktif melalui penyajian materi, contoh pelafalan otomatis, serta evaluasi pengucapan 
+menggunakan metode Word Error Rate (WER). Metodologi penelitian menggunakan pendekatan 
+Research and Development (R&D) dengan tahapan analisis kebutuhan, perancangan arsitektur 
+sistem, implementasi modul TTS dan STT, serta metode evaluasi performa sistem. Struktur sistem 
+dirancang secara modular agar setiap komponen dapat dikembangkan dan diuji secara terpisah 
+sebelum diintegrasikan. 
+Dengan rancangan tersebut, penelitian ini diharapkan mampu menghasilkan sistem 
+pembelajaran yang tidak hanya menyajikan materi secara visual, tetapi juga menyediakan interaksi 
+dua arah berbasis suara yang mendukung peningkatan kemampuan membaca dan melafalkan 
+aksara Sunda. 
+4.2 
+Rencana Tahapan Penelitian 
+Setelah proposal ini disetujui, penelitian akan dilanjutkan pada tahap implementasi dan 
+pengujian sistem. Tahapan tersebut meliputi: 
+1. Implementasi prototipe aplikasi sesuai desain arsitektur yang telah dirancang. 
+2. Integrasi model Speech-to-Text dan Text-to-Speech ke dalam sistem aplikasi. 
+3. Pengujian fungsional untuk memastikan seluruh fitur berjalan dengan baik. 
+4. Pengujian performa untuk mengukur akurasi pengenalan ucapan menggunakan metode 
+Word Error Rate. 
+5. Analisis hasil pengujian untuk mengevaluasi efektivitas aplikasi sebagai media 
+pembelajaran. 
+Tahapan ini bertujuan untuk memastikan bahwa sistem yang dirancang dapat 
+diimplementasikan secara optimal dan memberikan hasil yang sesuai dengan tujuan penelitian. 
+17 
+DAFTAR PUSTAKA 
+Radford, A., Kim, J. W., Xu, T., Brockman, G., McLeavey, C., & Sutskever, I. (2022). Robust 
+speech recognition via large-scale weak supervision. arXiv preprint arXiv:2212.04356. 
+Baevski, A., Zhou, H., Mohamed, A., & Auli, M. (2020). wav2vec 2.0: A framework for self
+supervised learning of speech representations. Advances in Neural Information Processing 
+Systems, 33. 
+Pratap, V., et al. (2023). Scaling speech technology to 1,000+ languages. arXiv preprint 
+arXiv:2305.13516. 
+Shen, J., Pang, R., Weiss, R. J., et al. (2018). Natural TTS synthesis by conditioning WaveNet on 
+mel spectrogram predictions. Proceedings of ICASSP. 
+Morris, A. C., Maier, V., & Green, P. (2004). From WER and RIL to MER and WIL: Improved 
+evaluation measures for connected speech recognition. Proceedings of ICSLP. 
+Ally, M. (2008). Foundations of educational theory for online learning. Athabasca University Press. 
+18 

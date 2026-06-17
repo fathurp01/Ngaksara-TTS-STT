@@ -1,0 +1,20 @@
+# Local Conda environment
+env/
+
+# Downloaded Hugging Face models
+models/
+
+# Hugging Face cache directory
+.hf_cache/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

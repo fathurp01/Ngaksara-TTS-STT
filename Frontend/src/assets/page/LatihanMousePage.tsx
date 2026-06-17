@@ -24,7 +24,7 @@ const aksaraNgalagena = [
   { char: 'ᮓ', name: 'DA' },
   { char: 'ᮏ', name: 'JA' },
   { char: 'ᮘ', name: 'BA' },
-  { char: 'ᮑ', name: 'NGA' },
+  { char: 'ᮑ', name: 'NYA' },
   { char: 'ᮐ', name: 'ZA' },
 ];
 

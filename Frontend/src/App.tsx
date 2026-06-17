@@ -3,12 +3,14 @@ import { useState } from "react";
 
 import LatihanMousePage from "./assets/page/LatihanMousePage";
 import LatihanGesturePage from "./assets/page/LatihanGesturePage";
+import LatihanSpeechPage from "./assets/page/LatihanSpeechPage";
 import KuisPage from "./assets/page/KuisPage";
 import KuisGesturePage from "./assets/page/KuisGesturePage";
+import KuisSpeechPage from "./assets/page/KuisSpeechPage";
 import type { InputMethod } from "./components/MethodSelection";
 import MethodSelectionPage from "./components/MethodSelection";
 
-type Page = "home" | "latihan-method" | "latihan-mouse" | "latihan-gesture" | "kuis-method" | "kuis" | "kuis-gesture";
+type Page = "home" | "latihan-method" | "latihan-mouse" | "latihan-gesture" | "latihan-speech" | "kuis-method" | "kuis" | "kuis-gesture" | "kuis-speech";
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("home");
@@ -16,16 +18,20 @@ function App() {
   const handleLatihanMethodSelect = (method: InputMethod) => {
     if (method === 'mouse') {
       setCurrentPage('latihan-mouse');
-    } else {
+    } else if (method === 'gesture') {
       setCurrentPage('latihan-gesture');
+    } else {
+      setCurrentPage('latihan-speech');
     }
   };
 
   const handleKuisMethodSelect = (method: InputMethod) => {
     if (method === 'mouse') {
       setCurrentPage('kuis');
-    } else {
+    } else if (method === 'gesture') {
       setCurrentPage('kuis-gesture');
+    } else {
+      setCurrentPage('kuis-speech');
     }
   };
 
@@ -47,6 +53,10 @@ function App() {
     return <LatihanGesturePage onBack={() => setCurrentPage('latihan-method')} />;
   }
 
+  if (currentPage === 'latihan-speech') {
+    return <LatihanSpeechPage onBack={() => setCurrentPage('latihan-method')} />;
+  }
+
   if (currentPage === 'kuis-method') {
     return (
       <MethodSelectionPage 
@@ -63,6 +73,10 @@ function App() {
 
   if (currentPage === 'kuis-gesture') {
     return <KuisGesturePage onBack={() => setCurrentPage('kuis-method')} />;
+  }
+
+  if (currentPage === 'kuis-speech') {
+    return <KuisSpeechPage onBack={() => setCurrentPage('kuis-method')} />;
   }
 
   return (

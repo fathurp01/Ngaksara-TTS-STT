@@ -10,7 +10,7 @@ const aksaraNgalagena = [
   { char: 'ᮛ', name: 'RA' }, { char: 'ᮞ', name: 'SA' }, { char: 'ᮟ', name: 'XA' },
   { char: 'ᮚ', name: 'YA' }, { char: 'ᮒ', name: 'TA' }, { char: 'ᮙ', name: 'MA' },
   { char: 'ᮓ', name: 'DA' }, { char: 'ᮏ', name: 'JA' }, { char: 'ᮘ', name: 'BA' },
-  { char: 'ᮑ', name: 'NGA' }, { char: 'ᮐ', name: 'ZA' },
+  { char: 'ᮑ', name: 'NYA' }, { char: 'ᮐ', name: 'ZA' },
 ];
 
 const aksaraSwara = [
@@ -202,32 +202,6 @@ const LatihanGesturePage = ({ onBack }: LatihanGesturePageProps) => {
             overlayCtx.lineWidth = 12; 
             overlayCtx.shadowColor = "#00FFFF";
             overlayCtx.shadowBlur = 15;
-
-            const drawPath = (points: {x: number, y: number}[]) => {
-                if (points.length < 2) return;
-                overlayCtx.beginPath();
-                overlayCtx.moveTo(points[0].x * overlayCanvas.width, points[0].y * overlayCanvas.height);
-                
-                for (let i = 1; i < points.length; i++) {
-                    const p1 = points[i - 1];
-                    const p2 = points[i];
-                    
-                    const midX = (p1.x + p2.x) / 2;
-                    const midY = (p1.y + p2.y) / 2;
-                    
-                    if (i === 1) {
-                         overlayCtx.lineTo(p1.x * overlayCanvas.width, p1.y * overlayCanvas.height);
-                    } else {
-                         const prevP = points[i-1];
-                         overlayCtx.lineTo(prevP.x * overlayCanvas.width, prevP.y * overlayCanvas.height);
-                    }
-                }
-                
-                for (let i = 1; i < points.length; i++) {
-                     overlayCtx.lineTo(points[i].x * overlayCanvas.width, points[i].y * overlayCanvas.height);
-                }
-                overlayCtx.stroke();
-            };
             
             const drawSmoothPath = (points: {x: number, y: number}[]) => {
                 if (points.length < 2) return;
